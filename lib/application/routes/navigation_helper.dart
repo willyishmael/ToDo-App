@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app/application/pages/home/home_page.dart';
 import 'package:todo_app/application/pages/root/root_page.dart';
+import 'package:todo_app/application/pages/settings/settings_page.dart';
 import 'package:todo_app/application/routes/get_page.dart';
 import 'package:todo_app/application/routes/go_router_observer.dart';
 import 'package:todo_app/application/routes/paths.dart';
@@ -38,7 +40,7 @@ class NavigationHelper {
               GoRoute(
                 path: Paths.homePath,
                 pageBuilder: (context, state) => getPage(
-                  child: const Center(child: Text('Home Page')),
+                  child: const HomePage(),
                   state: state,
                 ),
               ),
@@ -50,7 +52,7 @@ class NavigationHelper {
               GoRoute(
                 path: Paths.settingsPath,
                 pageBuilder: (context, state) => getPage(
-                  child: const Center(child: Text('Settings Page')),
+                  child: const SettingsPage(),
                   state: state,
                 ),
               ),
