@@ -16,9 +16,9 @@ class NavigationHelper {
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
   final GlobalKey<NavigatorState> homeNavigationKey =
-      GlobalKey<NavigatorState>(debugLabel: 'root');
+      GlobalKey<NavigatorState>(debugLabel: 'home');
   final GlobalKey<NavigatorState> settingsNavigationKey =
-      GlobalKey<NavigatorState>(debugLabel: 'root');
+      GlobalKey<NavigatorState>(debugLabel: 'settings');
 
   factory NavigationHelper() {
     return _instance;
