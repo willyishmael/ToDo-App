@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_app/application/pages/home/home_page.dart';
 import 'package:todo_app/application/pages/root/root_page.dart';
 import 'package:todo_app/application/pages/settings/settings_page.dart';
+import 'package:todo_app/application/pages/tasks/tasks_page.dart';
 import 'package:todo_app/application/routes/get_page.dart';
 import 'package:todo_app/application/routes/go_router_observer.dart';
 import 'package:todo_app/application/routes/paths.dart';
@@ -17,6 +18,8 @@ class NavigationHelper {
       GlobalKey<NavigatorState>(debugLabel: 'root');
   final GlobalKey<NavigatorState> homeNavigationKey =
       GlobalKey<NavigatorState>(debugLabel: 'home');
+  final GlobalKey<NavigatorState> tasksNavigationKey =
+      GlobalKey<NavigatorState>(debugLabel: 'tasks');
   final GlobalKey<NavigatorState> settingsNavigationKey =
       GlobalKey<NavigatorState>(debugLabel: 'settings');
 
@@ -41,6 +44,18 @@ class NavigationHelper {
                 path: Paths.homePath,
                 pageBuilder: (context, state) => getPage(
                   child: const HomePage(),
+                  state: state,
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: tasksNavigationKey,
+            routes: [
+              GoRoute(
+                path: Paths.tasksPath,
+                pageBuilder: (context, state) => getPage(
+                  child: const TasksPage(),
                   state: state,
                 ),
               ),
