@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Page getPage({
+Page wrapWithMaterialPage({
   required Widget child,
   required GoRouterState state,
 }) {

@@ -4,7 +4,7 @@ import 'package:todo_app/application/pages/home/home_page.dart';
 import 'package:todo_app/application/pages/root/root_page.dart';
 import 'package:todo_app/application/pages/settings/settings_page.dart';
 import 'package:todo_app/application/pages/tasks/tasks_page.dart';
-import 'package:todo_app/application/routes/get_page.dart';
+import 'package:todo_app/application/core/wrap_with_material_page.dart';
 import 'package:todo_app/application/routes/go_router_observer.dart';
 import 'package:todo_app/application/routes/paths.dart';
 
@@ -31,7 +31,7 @@ class NavigationHelper {
     final routes = <RouteBase>[
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, navigationShell) {
-          return getPage(
+          return wrapWithMaterialPage(
             child: RootPage(child: navigationShell),
             state: state,
           );
@@ -41,8 +41,9 @@ class NavigationHelper {
             navigatorKey: homeNavigationKey,
             routes: [
               GoRoute(
+                name: 'home',
                 path: Paths.homePath,
-                pageBuilder: (context, state) => getPage(
+                pageBuilder: (context, state) => wrapWithMaterialPage(
                   child: const HomePage(),
                   state: state,
                 ),
@@ -54,7 +55,7 @@ class NavigationHelper {
             routes: [
               GoRoute(
                 path: Paths.tasksPath,
-                pageBuilder: (context, state) => getPage(
+                pageBuilder: (context, state) => wrapWithMaterialPage(
                   child: const TasksPage(),
                   state: state,
                 ),
@@ -66,7 +67,7 @@ class NavigationHelper {
             routes: [
               GoRoute(
                 path: Paths.settingsPath,
-                pageBuilder: (context, state) => getPage(
+                pageBuilder: (context, state) => wrapWithMaterialPage(
                   child: const SettingsPage(),
                   state: state,
                 ),
