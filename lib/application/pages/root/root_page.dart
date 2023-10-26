@@ -45,11 +45,11 @@ class _RootPageState extends State<RootPage> {
         primaryNavigation: SlotLayout(config: {
           Breakpoints.medium: SlotLayout.from(
             key: const Key('primary-navigation-rail-small'),
-            builder: (context) => rootNavigationRailSmall(),
+            builder: (_) => rootNavigationRailSmall(),
           ),
           Breakpoints.large: SlotLayout.from(
             key: const Key('primary-navigation-rail-large'),
-            builder: (context) => rootNavigationRailLarge(),
+            builder: (_) => rootNavigationRailLarge(),
           ),
         }),
         body: SlotLayout(
@@ -71,7 +71,6 @@ class _RootPageState extends State<RootPage> {
           index,
           initialLocation: index == widget.child.currentIndex,
         );
-        setState(() {});
       },
       currentIndex: widget.child.currentIndex,
       destinations: destinations,
@@ -85,7 +84,6 @@ class _RootPageState extends State<RootPage> {
           index,
           initialLocation: index == widget.child.currentIndex,
         );
-        setState(() {});
       },
       selectedIndex: widget.child.currentIndex,
       destinations: destinations
@@ -101,7 +99,6 @@ class _RootPageState extends State<RootPage> {
           index,
           initialLocation: index == widget.child.currentIndex,
         );
-        setState(() {});
       },
       selectedIndex: widget.child.currentIndex,
       extended: true,
