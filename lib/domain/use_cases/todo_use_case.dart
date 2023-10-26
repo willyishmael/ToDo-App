@@ -5,15 +5,15 @@ import 'package:todo_app/domain/failures/failures.dart';
 import 'package:todo_app/domain/repository_protocols/todo_repository_protocol.dart';
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
-class LoadToDoCollections implements UseCase<List<TodoEntity>, NoParams> {
-  const LoadToDoCollections({required this.toDoRepository});
+class TodoUseCase implements UseCase<List<TodoEntity>, NoParams> {
+  const TodoUseCase({required this.toDoRepository});
 
   final TodoRepositoryProtocol toDoRepository;
 
   @override
   Future<Either<Failure, List<TodoEntity>>> call(NoParams params) async {
     try {
-      final loadedCollections = toDoRepository.readToDoCollections();
+      final loadedCollections = toDoRepository.readTodoCollections();
 
       return loadedCollections.fold(
         (left) => Left(left),
