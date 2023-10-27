@@ -1,7 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:todo_app/domain/entities/todo_color.dart';
 import 'package:todo_app/domain/entities/todo_entity.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
@@ -10,49 +9,44 @@ import 'package:todo_app/domain/repository_protocols/todo_repository_protocol.da
 import 'package:todo_app/domain/use_cases/todo_use_case.dart';
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
-@GenerateNiceMocks([MockSpec<TodoRepositoryProtocol>()])
-import 'todo_use_case_test.mocks.dart';
+class MockTodoRepository extends Mock implements TodoRepositoryProtocol {}
 
 void main() {
+  final todoRepository = MockTodoRepository();
+
   group('TodoUseCase test:', () {
+    final todoUseCaseUnderTest =
+            TodoUseCase(toDoRepository: todoRepository);
+
     group('Should return TodoEntity', () {
       test('when TodoRepository returns TodoModel', () async {
-        final todoRepositoryMock = MockTodoRepositoryProtocol();
-        final todoUseCaseUnderTest =
-            TodoUseCase(toDoRepository: todoRepositoryMock);
-
-        final dummyData = Right<Failure, List<TodoEntity>>([
-          TodoEntity(
-            id: CollectionId(),
-            title: 'test',
-            color: TodoColor(colorIndex: 1),
+        final dummyData = Right<Failure, List<TodoEntity>>(List.generate(
+          5,
+          (index) => TodoEntity(
+            id: CollectionId.fromUniqueString('id $index'),
+            title: 'title $index',
+            color: TodoColor(
+              colorIndex: index % TodoColor.predefinedColors.length,
+            ),
           ),
-        ]);
+        ));
 
-        provideDummy(dummyData);
+        when(() => todoRepository.readTodoCollections()).thenAnswer(
+            (_) => Future.value(dummyData));
 
-        when(todoRepositoryMock.readTodoCollections()).thenAnswer(
-          (realInvocation) => Future.value(dummyData),
-        );
-
-        final result = await todoUseCaseUnderTest.call(NoParams());
+        final result = await todoUseCaseUnderTest(NoParams());
         expect(result.isLeft, false);
         expect(result.isRight, true);
         expect(result, dummyData);
-        verify(() => todoRepositoryMock.readTodoCollections()).called(1);
-        verifyNoMoreInteractions(todoRepositoryMock);
+        verify(() => todoRepository.readTodoCollections()).called(1);
+        verifyNoMoreInteractions(todoRepository);
       });
     });
     group('Should return Failure', () {
       test('when TodoRepository returns Failure', () async {
-        final todoRepositoryMock = MockTodoRepositoryProtocol();
-        final todoUseCaseUnderTest =
-            TodoUseCase(toDoRepository: todoRepositoryMock);
-
         final dummyData = Left<Failure, List<TodoEntity>>(ServerFailure());
-        provideDummy(dummyData);
 
-        when(todoRepositoryMock.readTodoCollections())
+        when(() => todoRepository.readTodoCollections())
             .thenAnswer((realInvocation) => Future.value(dummyData));
 
         final result = await todoUseCaseUnderTest.call(NoParams());
@@ -60,8 +54,8 @@ void main() {
         expect(result.isLeft, true);
         expect(result.isRight, false);
         expect(result, dummyData);
-        verify(() => todoRepositoryMock.readTodoCollections()).called(1);
-        verifyNoMoreInteractions(todoRepositoryMock);
+        verify(() => todoRepository.readTodoCollections()).called(1);
+        verifyNoMoreInteractions(todoRepository);
       });
     });
   });
