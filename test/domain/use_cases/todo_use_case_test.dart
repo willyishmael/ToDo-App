@@ -16,7 +16,7 @@ void main() {
 
   group('TodoUseCase test:', () {
     final todoUseCaseUnderTest =
-            TodoUseCase(toDoRepository: todoRepository);
+            TodoUseCase(todoRepository: todoRepository);
 
     group('Should return TodoEntity', () {
       test('when TodoRepository returns TodoModel', () async {
