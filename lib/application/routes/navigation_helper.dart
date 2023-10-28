@@ -56,7 +56,7 @@ class NavigationHelper {
               GoRoute(
                 path: Paths.tasksPath,
                 pageBuilder: (context, state) => wrapWithMaterialPage(
-                  child: const TasksPage(),
+                  child: const TasksPageProvider(),
                   state: state,
                 ),
               ),
