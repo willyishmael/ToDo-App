@@ -15,8 +15,7 @@ void main() {
   final todoRepository = MockTodoRepository();
 
   group('TodoUseCase test:', () {
-    final todoUseCaseUnderTest =
-            TodoUseCase(todoRepository: todoRepository);
+    final todoUseCaseUnderTest = TodoUseCase(todoRepository: todoRepository);
 
     group('Should return TodoEntity', () {
       test('when TodoRepository returns TodoModel', () async {
@@ -31,8 +30,8 @@ void main() {
           ),
         ));
 
-        when(() => todoRepository.readTodoCollections()).thenAnswer(
-            (_) => Future.value(dummyData));
+        when(() => todoRepository.readTodoCollections())
+            .thenAnswer((_) => Future.value(dummyData));
 
         final result = await todoUseCaseUnderTest(NoParams());
         expect(result.isLeft, false);
@@ -43,17 +42,30 @@ void main() {
       });
     });
     group('Should return Failure', () {
-      test('when TodoRepository returns Failure', () async {
-        final dummyData = Left<Failure, List<TodoEntity>>(ServerFailure());
+      late Left<Failure, List<TodoEntity>> expectedError;
 
+      setUpAll(() =>
+          expectedError = Left<Failure, List<TodoEntity>>(ServerFailure()));
+      test('when TodoRepository returns Failure', () async {
         when(() => todoRepository.readTodoCollections())
-            .thenAnswer((realInvocation) => Future.value(dummyData));
+            .thenAnswer((realInvocation) => Future.value(expectedError));
 
         final result = await todoUseCaseUnderTest.call(NoParams());
 
         expect(result.isLeft, true);
         expect(result.isRight, false);
-        expect(result, dummyData);
+        expect(result, expectedError);
+        verify(() => todoRepository.readTodoCollections()).called(1);
+        verifyNoMoreInteractions(todoRepository);
+      });
+
+      test('when error occurred', () async {
+        when(() => todoRepository.readTodoCollections()).thenThrow(Exception());
+
+        final result = await todoUseCaseUnderTest.call(NoParams());
+
+        expect(result.isLeft, true);
+        expect(result.isRight, false);
         verify(() => todoRepository.readTodoCollections()).called(1);
         verifyNoMoreInteractions(todoRepository);
       });

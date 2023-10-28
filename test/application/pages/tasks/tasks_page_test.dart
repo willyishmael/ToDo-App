@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_app/application/pages/tasks/cubit/tasks_cubit.dart';
 import 'package:todo_app/application/pages/tasks/tasks_page.dart';
+import 'package:todo_app/application/pages/tasks/widgets/tasks_at_error_state.dart';
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loaded_state.dart';
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loading_state.dart';
 import 'package:todo_app/domain/entities/todo_color.dart';
 import 'package:todo_app/domain/entities/todo_entity.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
+import 'package:todo_app/domain/failures/failures.dart';
 
 class MockTasksCubit extends MockCubit<TasksState> implements TasksCubit {}
 
@@ -68,6 +70,26 @@ void main() {
           expect(find.byType(TasksAtLoadingState), findsNothing);
           expect(find.byType(TasksAtLoadedState), findsOneWidget);
           expect(find.text('tasks test'), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'Error when cubit emits TasksErrorState',
+        (widgetTester) async {
+          final expectedFailure = ServerFailure();
+
+          whenListen(
+            mockTasksCubit,
+            Stream.fromIterable([TasksErrorState(failure: expectedFailure)]),
+            initialState: TasksLoadingState(),
+          );
+
+          await widgetTester.pumpWidget(widgetUnderTest(cubit: mockTasksCubit));
+          await widgetTester.pumpAndSettle();
+
+          expect(find.byType(TasksAtLoadingState), findsNothing);
+          expect(find.byType(TasksAtErrorState), findsOneWidget);
+          expect(find.text('Error, please try again!'), findsOneWidget);
         },
       );
     });
