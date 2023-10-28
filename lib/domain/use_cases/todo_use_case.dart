@@ -6,14 +6,14 @@ import 'package:todo_app/domain/repository_protocols/todo_repository_protocol.da
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
 class TodoUseCase implements UseCase<List<TodoEntity>, NoParams> {
-  const TodoUseCase({required this.toDoRepository});
+  const TodoUseCase({required this.todoRepository});
 
-  final TodoRepositoryProtocol toDoRepository;
+  final TodoRepositoryProtocol todoRepository;
 
   @override
   Future<Either<Failure, List<TodoEntity>>> call(NoParams params) async {
     try {
-      final loadedCollections = toDoRepository.readTodoCollections();
+      final loadedCollections = todoRepository.readTodoCollections();
 
       return loadedCollections.fold(
         (left) => Left(left),
