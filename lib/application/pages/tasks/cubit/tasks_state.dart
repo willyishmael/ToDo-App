@@ -12,7 +12,7 @@ final class TasksInitialState extends TasksState {}
 final class TasksLoadingState extends TasksState {}
 
 final class TasksLoadedState extends TasksState {
-  final List<TodoEntity> tasks;
+  final List<TaskEntity> tasks;
   const TasksLoadedState({required this.tasks});
 
   @override

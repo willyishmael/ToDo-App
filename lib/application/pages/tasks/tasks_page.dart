@@ -5,7 +5,7 @@ import 'package:todo_app/application/pages/tasks/widgets/tasks_at_error_state.da
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loaded_state.dart';
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loading_state.dart';
 import 'package:todo_app/data/repositories/todo_repository_mock.dart';
-import 'package:todo_app/domain/use_cases/todo_use_case.dart';
+import 'package:todo_app/domain/use_cases/task_use_case.dart';
 
 class TasksPageProvider extends StatelessWidget {
   const TasksPageProvider({super.key});
@@ -15,7 +15,7 @@ class TasksPageProvider extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final todoRepository = TodoRepositoryMock();
-        final todoUseCase = TodoUseCase(todoRepository: todoRepository);
+        final todoUseCase = TaskUseCase(todoRepository: todoRepository);
         return TasksCubit(todoUseCase: todoUseCase)..readTodoCollections();
       },
       child: const TasksPage(),

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/domain/entities/todo_entity.dart';
+import 'package:todo_app/domain/entities/task_entity.dart';
 import 'package:todo_app/domain/failures/failures.dart';
-import 'package:todo_app/domain/use_cases/todo_use_case.dart';
+import 'package:todo_app/domain/use_cases/task_use_case.dart';
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
 part 'tasks_state.dart';
@@ -10,7 +10,7 @@ part 'tasks_state.dart';
 class TasksCubit extends Cubit<TasksState> {
   TasksCubit({required this.todoUseCase}) : super(TasksInitialState());
 
-  final TodoUseCase todoUseCase;
+  final TaskUseCase todoUseCase;
 
   void readTodoCollections() async {
     emit(TasksLoadingState());

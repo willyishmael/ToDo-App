@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/domain/entities/todo_entity.dart';
+import 'package:todo_app/domain/entities/task_entity.dart';
 
 class TasksAtLoadedState extends StatelessWidget {
   const TasksAtLoadedState({
@@ -7,7 +7,7 @@ class TasksAtLoadedState extends StatelessWidget {
     required this.tasks,
   });
 
-  final List<TodoEntity> tasks;
+  final List<TaskEntity> tasks;
 
   @override
   Widget build(BuildContext context) {
