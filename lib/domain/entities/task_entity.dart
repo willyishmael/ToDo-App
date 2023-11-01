@@ -1,20 +1,20 @@
 import 'package:todo_app/domain/entities/todo_color.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 
-class TodoEntity {
-  final CollectionId id;
+class TaskEntity {
+  final TaskId id;
   final String title;
   final TodoColor color;
 
-  TodoEntity({
+  TaskEntity({
     required this.id,
     required this.title,
     required this.color,
   });
 
-  factory TodoEntity.empty() {
-    return TodoEntity(
-      id: CollectionId(),
+  factory TaskEntity.empty() {
+    return TaskEntity(
+      id: TaskId(),
       title: '',
       color: TodoColor(colorIndex: 0),
     );
