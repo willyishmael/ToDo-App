@@ -1,19 +1,19 @@
 
 import 'package:either_dart/either.dart';
-import 'package:todo_app/domain/entities/todo_entity.dart';
+import 'package:todo_app/domain/entities/task_entity.dart';
 import 'package:todo_app/domain/failures/failures.dart';
 import 'package:todo_app/domain/repository_protocols/todo_repository_protocol.dart';
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
-class TodoUseCase implements UseCase<List<TodoEntity>, NoParams> {
-  const TodoUseCase({required this.todoRepository});
+class TaskUseCase implements UseCase<List<TaskEntity>, NoParams> {
+  const TaskUseCase({required this.todoRepository});
 
   final TodoRepositoryProtocol todoRepository;
 
   @override
-  Future<Either<Failure, List<TodoEntity>>> call(NoParams params) async {
+  Future<Either<Failure, List<TaskEntity>>> call(NoParams params) async {
     try {
-      final loadedCollections = todoRepository.readTodoCollections();
+      final loadedCollections = todoRepository.getTaskList();
 
       return loadedCollections.fold(
         (left) => Left(left),
