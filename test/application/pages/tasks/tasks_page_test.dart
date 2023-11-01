@@ -8,7 +8,7 @@ import 'package:todo_app/application/pages/tasks/widgets/tasks_at_error_state.da
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loaded_state.dart';
 import 'package:todo_app/application/pages/tasks/widgets/tasks_at_loading_state.dart';
 import 'package:todo_app/domain/entities/todo_color.dart';
-import 'package:todo_app/domain/entities/todo_entity.dart';
+import 'package:todo_app/domain/entities/task_entity.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 import 'package:todo_app/domain/failures/failures.dart';
 
@@ -49,8 +49,8 @@ void main() {
         'Loaded when cubit emits TasksLoadedState',
         (widgetTester) async {
           final tasks = [
-            TodoEntity(
-              id: CollectionId.fromUniqueString(1.toString()),
+            TaskEntity(
+              id: TaskId.fromUniqueString(1.toString()),
               title: 'tasks test',
               color: TodoColor(
                 colorIndex: 1,

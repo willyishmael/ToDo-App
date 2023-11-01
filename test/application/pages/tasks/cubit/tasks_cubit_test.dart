@@ -3,28 +3,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:todo_app/application/pages/tasks/cubit/tasks_cubit.dart';
 import 'package:todo_app/domain/entities/todo_color.dart';
-import 'package:todo_app/domain/entities/todo_entity.dart';
+import 'package:todo_app/domain/entities/task_entity.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 import 'package:todo_app/domain/failures/failures.dart';
-import 'package:todo_app/domain/use_cases/todo_use_case.dart';
+import 'package:todo_app/domain/use_cases/task_use_case.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:todo_app/domain/use_cases/use_case.dart';
 
-class MockTodoUseCase extends Mock implements TodoUseCase {}
+class MockTodoUseCase extends Mock implements TaskUseCase {}
 
 void main() {
   group('TasksCubit Test:', () {
     final mockTodoUseCase = MockTodoUseCase();
-    final expectedValue = Right<Failure, List<TodoEntity>>([
-      TodoEntity(
-        id: CollectionId.fromUniqueString(1.toString()),
+    final expectedValue = Right<Failure, List<TaskEntity>>([
+      TaskEntity(
+        id: TaskId.fromUniqueString(1.toString()),
         title: 'bloc test',
         color: TodoColor(
           colorIndex: 1,
         ),
       ),
     ]);
-    final expectedFailure = Left<Failure, List<TodoEntity>>(ServerFailure());
+    final expectedFailure = Left<Failure, List<TaskEntity>>(ServerFailure());
 
     blocTest<TasksCubit, TasksState>(
       'emits [TasksLoadingState, TasksLoadedState] when TodoUseCase is called.',
